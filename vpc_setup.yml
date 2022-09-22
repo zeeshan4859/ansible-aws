@@ -14,5 +14,8 @@
       dns_hostnames: yes
       tenancy: default
      register: vpcout
-     - name: create
      
+   - debug:
+      var: vpcout
+
+ 
