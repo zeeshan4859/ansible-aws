@@ -101,7 +101,7 @@
         state: "{{state}}"
         tags:
              Name: IGW_forPub
-        register: IGW_out
-        
+     register: IGW_out
+
 
           
