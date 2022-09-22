@@ -92,5 +92,16 @@
              Name: privSub_3
      register: PrivSub3Cidr_out
 
+     # Internet Gateway for Public subnets
+
+   - name: Internet Gateway
+     ec2_vpc_igw:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+             Name: IGW_forPub
+        register: IGW_out
+        
 
           
