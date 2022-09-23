@@ -127,7 +127,6 @@
      ec2_vpc_nat_gateway:
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
-        state: "{{state}}"
         subnet_id: "{{ Pub_Sub1_out.subnet.id }}"
         wait: yes
         if_exist_do_not_create: true
