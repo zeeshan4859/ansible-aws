@@ -19,7 +19,7 @@
             content: "{{vp_key_out.key.private_key}}"
             dest: "./vp_key.pem"
             mode: 0600
-        when: vp_key_out.changed
+     #   when: vp_key_out.changed
 
       - name: create instace SG
         ec2_group:
@@ -37,6 +37,7 @@
       - name: create bastion instace
         ec2:
             key_name: vp_key
+            region: "{{region}}"
             group: Bastion_Host_SG
             instance_type: t2.micro
             image: "{{bastion_ami}}"
