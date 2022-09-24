@@ -138,7 +138,7 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
-        subn ets:
+        subnets:
              - "{{ Priv_Sub1_out.subnet.id }}"
              - "{{ Priv_Sub2_out.subnet.id }}"
              - "{{ Priv_Sub3_out.subnet.id }}"
