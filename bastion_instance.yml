@@ -1,0 +1,53 @@
+- hosts: localhost
+  connection: loclal
+  gather_facts: no
+  tasks:
+      - name: import variables
+        include_vars: variable/bastion_setup
+      - name: import second file
+        include_vars: variable/vpc_var
+
+      - name: Create instace
+        ec2_key:
+            name: vp_key
+            region: "{{region}}"
+        register: vp_key_out
+
+
+      - name: copy the vp_key
+        copy:
+            content: "{{vp_key_out.key.private_key}}"
+            dest: "./vp_key.pem"
+            mode: 0600
+        when: vp_key_out.changed
+
+      - name: create instace SG
+        ec2_group:
+            name: Bastion_Host_SG
+            region: "{{region}}"
+            vpc_id: "{{vpcid}}"
+            subnet_id: "{{pubsub1id}}"
+            rules:
+                - proto: tcp
+                  from_port: 22
+                  to_port: 22
+                  cidr_ip: 0.0.0.0/0
+        register: Bastion_Host_SG_out
+
+        # create bastion instace
+      - name: create bastion instace
+        ec2:
+            key_name: vp_key
+            group: Bastion_Host_SG
+            instance_type: t2.micro
+            image: "{{bastion_ami}}"
+            wait: yes
+            wait_timeout: 500
+            count: 1
+            vpc_subnet_id: "{{pubsub1id}}"
+            instance_tags:
+                 Name: Bastion_Host
+            assign_public_ip: yes
+        register: Bastion_Host_out
+
+
