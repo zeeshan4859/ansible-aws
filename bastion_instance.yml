@@ -41,6 +41,7 @@
             group: Bastion_Host_SG
             instance_type: t2.micro
             image: "{{bastion_ami}}"
+            state: present
             wait: yes
             wait_timeout: 500
             count: 1
