@@ -150,35 +150,35 @@
      register: private_route_out
 
      # Print All ID's
-   - name: print ID's
-     debug:
-        var: "{{item}}"
-     loop:
-        - vpcout.vpc.id
-        - Pub_Sub1_out.subnet.id
-        - Pub_Sub2_out.subnet.id
-        - Pub_Sub3_out.subnet.id
-        - Priv_Sub1_out.subnet.id
-        - Priv_Sub2_out.subnet.id
-        - Priv_Sub3_out.subnet.id
-        - IGW_out.gateway_id
-        - NGW_out.nat_gateway_id
-        - public_route_out.route_table.id
-        - private_route_out.route_table.id
+  #  - name: print ID's
+  #    debug:
+  #       var: "{{item}}"
+  #    loop:
+  #       - vpcout.vpc.id
+  #       - Pub_Sub1_out.subnet.id
+  #       - Pub_Sub2_out.subnet.id
+  #       - Pub_Sub3_out.subnet.id
+  #       - Priv_Sub1_out.subnet.id
+  #       - Priv_Sub2_out.subnet.id
+  #       - Priv_Sub3_out.subnet.id
+  #       - IGW_out.gateway_id
+  #       - NGW_out.nat_gateway_id
+  #       - public_route_out.route_table.id
+  #       - private_route_out.route_table.id
 
-   - set_fact:
-        vpcid: "{{vpcout.vpc.id}}"
-        pubsub1id: "{{ Pub_Sub1_out.subnet.id}}"
-        pubsub2id: "{{Pub_Sub2_out.subnet.id}}"
-        pubsub3id: "{{Pub_Sub3_out.subnet.id}}"
-        privsub1id: "{{Priv_Sub1_out.subnet.id}}"
-        privsub2id: "{{Priv_Sub2_out.subnet.id}}"
-        privsub3id: "{{Priv_Sub3_out.subnet.id}}"
-        igwid: "{{IGW_out.gateway_id}}"
-        ngwid: "{{NGW_out.nat_gateway_id}}"
-        pubrouteid: "{{public_route_out.route_table.id}}"
-        privrouteid: "{{private_route_out.route_table.id}}"
-        cacheable: yes
+  #  - set_fact:
+  #       vpcid: "{{vpcout.vpc.id}}"
+  #       pubsub1id: "{{ Pub_Sub1_out.subnet.id}}"
+  #       pubsub2id: "{{Pub_Sub2_out.subnet.id}}"
+  #       pubsub3id: "{{Pub_Sub3_out.subnet.id}}"
+  #       privsub1id: "{{Priv_Sub1_out.subnet.id}}"
+  #       privsub2id: "{{Priv_Sub2_out.subnet.id}}"
+  #       privsub3id: "{{Priv_Sub3_out.subnet.id}}"
+  #       igwid: "{{IGW_out.gateway_id}}"
+  #       ngwid: "{{NGW_out.nat_gateway_id}}"
+  #       pubrouteid: "{{public_route_out.route_table.id}}"
+  #       privrouteid: "{{private_route_out.route_table.id}}"
+  #       cacheable: yes
 
         #copy all the variablel of vpc
 
