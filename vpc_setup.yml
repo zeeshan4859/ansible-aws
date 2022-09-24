@@ -130,8 +130,6 @@
         wait: yes
         region: "{{region}}"
         if_exist_do_not_create: true
-        tags:
-             Name: NGW_vprofile
      register: NGW_out
 
      # Create Private Route Table
