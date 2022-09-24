@@ -38,7 +38,6 @@
       - name: create bastion instace
         ec2:
             key_name: vp_key
-            description: this is bastion host
             region: "{{region}}"
             instance_type: t2.micro
             image: "{{bastion_ami}}"
@@ -49,7 +48,6 @@
             exact_count: 1
             count_tag:
                 Name: Bastion_Host
-            vpc_subnet_id: "{{pubsub1id}}"
             assign_public_ip: yes
             group_id: "{{Bastion_Host_SG_out.group.id}}"
         register: Bastion_Host_out
