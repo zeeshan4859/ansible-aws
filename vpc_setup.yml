@@ -138,13 +138,13 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
-        subnets:
+        subn ets:
              - "{{ Priv_Sub1_out.subnet.id }}"
              - "{{ Priv_Sub2_out.subnet.id }}"
              - "{{ Priv_Sub3_out.subnet.id }}"
         routes:
              - dest: 0.0.0.0/0
-               gateway_id: "{{ NGW_out.gateway_id }}"
+               gateway_id: "{{ NGW_out.nat_gateway_id }}"
         tags:
              Name: Private_Route
      register: private_route_out
