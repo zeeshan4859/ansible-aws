@@ -38,17 +38,16 @@
         ec2:
             key_name: vp_key
             region: "{{region}}"
-            group_id: "{{Bastion_Host_SG_out.group.id}}"
             instance_type: t2.micro
             image: "{{bastion_ami}}"
-            state: present
             wait: yes
-            wait_timeout: 500
-            count: 1
-            vpc_subnet_id: "{{pubsub1id}}"
+            wait_timeout: 300
             instance_tags:
                  Name: Bastion_Host
-            assign_public_ip: yes
+            exact_count: 1
+            count_tag:
+                 Name: Bastion_Host
+            group_id: "{{Bastion_Host_SG_out.group.id}}"
         register: Bastion_Host_out
 
 
