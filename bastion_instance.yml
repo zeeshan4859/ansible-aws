@@ -22,9 +22,9 @@
         when: vp_key_out.changed
 
       - name: create instace SG
-        ec2_group:
+        ec2_group: 
             name: Bastion_Host_SG
-            description: this is for bastion host
+            description: this for bastion host
             region: "{{region}}"
             vpc_id: "{{vpcid}}"
             rules:
@@ -38,9 +38,10 @@
       - name: create bastion instace
         ec2:
             key_name: vp_key
-            region: us-east-1
+            description: this is bastion host
+            region: "{{region}}"
             instance_type: t2.micro
-            image: ami-05fa00d4c63e32376
+            image: "{{bastion_ami}}"
             wait: yes
             wait_timeout: 300
             instance_tags:
@@ -48,7 +49,9 @@
             exact_count: 1
             count_tag:
                 Name: Bastion_Host
-            group_id: "{{Bastion_Host_SG_out.group.id}}"
+            vpc_subnet_id: "{{pubsub1id}}"
+            assign_public_ip: yes
+            group_id: "{{Bastion_Host_SG_out.group_id}}"
         register: Bastion_Host_out
 
 
