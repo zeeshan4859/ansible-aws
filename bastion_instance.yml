@@ -48,7 +48,6 @@
             exact_count: 1
             count_tag:
                 Name: Bastion_Host
-            assign_public_ip: yes
             group_id: "{{Bastion_Host_SG_out.group.id}}"
         register: Bastion_Host_out
 
