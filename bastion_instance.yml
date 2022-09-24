@@ -38,9 +38,9 @@
       - name: create bastion instace
         ec2:
             key_name: vp_key
-            region: "{{region}}"
+            region: us-east-1
             instance_type: t2.micro
-            image: "{{bastion_ami}}"
+            image: ami-05fa00d4c63e32376
             wait: yes
             wait_timeout: 300
             instance_tags:
