@@ -24,6 +24,7 @@
       - name: create instace SG
         ec2_group:
             name: Bastion_Host_SG
+            description: this is for bastion host
             region: "{{region}}"
             vpc_id: "{{vpcid}}"
             rules:
