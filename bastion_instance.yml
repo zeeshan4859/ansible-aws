@@ -38,7 +38,6 @@
       - name: create bastion instace
         ec2:
             key_name: vp_key
-            description: this is bastion host
             region: "{{region}}"
             instance_type: t2.micro
             image: "{{bastion_ami}}"
