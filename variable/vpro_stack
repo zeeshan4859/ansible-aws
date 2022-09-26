@@ -4,3 +4,4 @@ tomcat_ami: ami-0ee23bfc74a881de5
 memcahd_ami: ami-0ee23bfc74a881de5
 rmq_ami: ami-0ee23bfc74a881de5
 mysql_ami: ami-0ee23bfc74a881de5
+bastion_sg:

@@ -52,8 +52,9 @@
             group_id: "{{Bastion_Host_SG_out.group_id}}"
         register: Bastion_Host_out
 
-      - name: copy the bastion sg_id
-        copy:
-            content: "bastion_sg: {{Bastion_Host_SG_out.group_id}}"
-            dest: ./variable/bastion_sg_id
+      - name: copy the bastion sg_id in vpro_stup file
+        blockinfile:
+            path: variable/vpro_stack
+            block: |
+                bastion_sg: {{Bastion_Host_SG_out.group_id}}
 
