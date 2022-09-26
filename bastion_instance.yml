@@ -4,7 +4,7 @@
   tasks:
       - name: import variables
         include_vars: variable/vpc_setup_varables 
-      - include_vars: variable/vpc_out_variable
+      - include_vars: variable/vpc_out_variable 
 
       - name: Create instace
         ec2_key:
@@ -18,7 +18,7 @@
             content: "{{vp_key_out.key.private_key}}"
             dest: "./vp_key.pem"
             mode: 0600
-       # when: vp_key_out.changed
+      
 
       - name: create instace SG
         ec2_group: 
