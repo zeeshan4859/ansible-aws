@@ -18,7 +18,7 @@
             content: "{{vp_key_out.key.private_key}}"
             dest: "./vp_key.pem"
             mode: 0600
-        when: vp_key_out.changed
+       # when: vp_key_out.changed
 
       - name: create instace SG
         ec2_group: 
