@@ -1,7 +1,8 @@
 ---
-  host: localhost
+- name: vpro instance setup
+  hosts: localhost
   connection: local
-  gather_fact: False
+  gather_facts: False
   tasks:
 
       - name: import vpc out variable
