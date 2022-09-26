@@ -1,5 +1,5 @@
 ---
-- name: vpro instance setup
+  name: vpro instance setup
   host: localhost
   connection: local
   gather_fact: False
