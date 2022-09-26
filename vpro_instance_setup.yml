@@ -11,9 +11,6 @@
       - name: impor vpro stack variable
         include_vars: variable/vpro_stack
 
-      - name: import bastion host sg sg_id
-        include_vars: variable/bastion_sg_id
-
       - name: create key painr
         ec2_key:
             name: vp_stack_key
@@ -48,6 +45,7 @@
             description: SG for the vpor stack
             region: "{{region}}"
             vpc_id: "{{vpcid}}"
+            purge_rules: no
             rules:
                 - proto: tcp
                   from_port: 80
@@ -58,5 +56,19 @@
                   from_port: 22
                   to_port: 22
                   group_id: "{{bastion_sg}}"
-        register: bastion_sg_out
+        register: vpor_stack_sg_out
+
+
+      - name: update the vpor_stack_sg
+        ec2_group:
+            name: vpor_stack_sg
+            description: SG for the vpor stack
+            region: "{{region}}"
+            vpc_id: "{{vpcid}}"
+            purge_rules: no
+            rules:
+                - proto: all
+                  group_id: "{{vpor_stack_sg_out.group_id}}"
+
+
 
