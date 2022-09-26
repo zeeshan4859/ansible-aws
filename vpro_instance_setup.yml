@@ -11,6 +11,9 @@
       - name: impor vpro stack variable
         include_vars: variable/vpro_stack
 
+      - name: import bastion host sg sg_id
+        include_vars: variable/bastion_sg_id
+
       - name: create key painr
         ec2_key:
             name: vp_stack_key
@@ -55,5 +58,5 @@
                   from_port: 22
                   to_port: 22
                   group_id: "{{bastion_sg}}"
-        register: vporELB_Sg_out
-        
+        register: bastion_sg_out
+
