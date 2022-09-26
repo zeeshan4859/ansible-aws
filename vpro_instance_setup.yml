@@ -1,0 +1,59 @@
+---
+- name: vpro instance setup
+  host: localhost
+  connection: local
+  gather_fact: False
+  tasks:
+
+      - name: import vpc out variable
+        include_vars: variable/vpc_out_variable
+
+      - name: impor vpro stack variable
+        include_vars: variable/vpro_stack
+
+      - name: create key painr
+        ec2_key:
+            name: vp_stack_key
+            region: "{{region}}"
+        register: vp_stack_key_out
+
+
+      - name: copy the vp_stack_key
+        copy:
+            content: "{{vp_stack_key_out.key.private_key}}"
+            dest: "./vp_stack_key.pem"
+            mode: 0600
+        when: vp_key_out.changed
+
+      - name: create sg for fro load banced
+        ec2_group:
+            name: vporELB_Sg
+            description: SG for the ELB
+            region: "{{region}}"
+            vpc_id: "{{vpcid}}"
+            rules:
+                - proto: tcp
+                  from_port: 80
+                  to_port: 80
+                  cidr_ip: 0.0.0.0/0
+        register: vporELB_Sg_out
+
+
+      - name: create sg for vpro stack
+        ec2_group:
+            name: vpor_stack_sg
+            description: SG for the vpor stack
+            region: "{{region}}"
+            vpc_id: "{{vpcid}}"
+            rules:
+                - proto: tcp
+                  from_port: 80
+                  to_port: 80
+                  group_id: "{{vporELB_Sg_out.group_id}}"
+
+                - proto: tcp
+                  from_port: 22
+                  to_port: 22
+                  group_id: "{{bastion_sg}}"
+        register: vporELB_Sg_out
+        
