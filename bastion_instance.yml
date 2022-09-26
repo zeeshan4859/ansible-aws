@@ -3,9 +3,8 @@
   gather_facts: no
   tasks:
       - name: import variables
-        include_vars: variable/bastion_setup
-      - name: import second file
-        include_vars: variable/vpc_var
+        include_vars: variable/vpc_setup_varables 
+      - include_vars: variable/vpc_out_variable
 
       - name: Create instace
         ec2_key:
