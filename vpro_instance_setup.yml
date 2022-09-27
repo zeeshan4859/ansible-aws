@@ -23,7 +23,7 @@
             content: "{{vp_stack_key_out.key.private_key}}"
             dest: "./vp_stack_key.pem"
             mode: 0600
-        when: vp_key_out.changed
+        when: vp_stack_key_out.changed
 
       - name: create sg for fro load banced
         ec2_group:
