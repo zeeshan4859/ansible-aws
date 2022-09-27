@@ -70,5 +70,24 @@
                 - proto: all
                   group_id: "{{vpor_stack_sg_out.group_id}}"
 
+      - name: createing Nginx server web01
+        ec2:
+            key_name: vp_stack_key
+            region: "{{region}}"
+            instance_type: t2.micro
+            image: "{{nginx_ami}}"
+            wait: yes
+            wait_timeout: 300
+            instance_tags:
+                Name: Nginx_Server
+            exact_count: 1
+            count_tag:
+                Name: Nginx_Server
+            group_id: "{{vpor_stack_sg_out.group_id}}"
+            vpc_subnet_id: "{{privsub1id}}"
+        register: web01_out
+
+             
+
 
 
