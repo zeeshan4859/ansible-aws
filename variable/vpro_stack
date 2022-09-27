@@ -4,7 +4,6 @@ tomcat_ami: ami-0ee23bfc74a881de5
 memcahd_ami: ami-0ee23bfc74a881de5
 rmq_ami: ami-0ee23bfc74a881de5
 mysql_ami: ami-0ee23bfc74a881de5
-bastion_sg:
 # BEGIN ANSIBLE MANAGED BLOCK
 bastion_sg: sg-068492055718f3578
 # END ANSIBLE MANAGED BLOCK
