@@ -140,8 +140,18 @@
             vpc_subnet_id: "{{privsub1id}}"
         register: rmq_out
 
-      - debug:
-            var: rmq_out    
+ #     - debug:
+ #          var: rmq_out
+
+      - name: copy the instance ids in the file
+        copy: 
+            content: " web01: {{web01_out.tagged_instances.id}}\ntomcat: {{tomcat_out.tagged_instances.id}}\nMemcahd: {{Memcahd_out.tagged_instances.id}}\nrmq: {{rmq_out.tagged_instances.id}}\n "
+            dest: variable/instance_ids
+
+      - name: copy the instance ips in the file
+        copy: 
+            content: " web01: {{web01_out.tagged_instances.private_ip}}\ntomcat: {{tomcat_out.tagged_instances.private_ip}}\nMemcahd: {{Memcahd_out.tagged_instances.private_ip}}\nrmq: {{rmq_out.tagged_instances.private_ip}}\n "
+            dest: variable/instance_ips
 
              
 
