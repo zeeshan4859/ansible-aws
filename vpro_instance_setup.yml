@@ -88,6 +88,58 @@
             vpc_subnet_id: "{{privsub1id}}"
         register: web01_out
 
+      - name: createing tomcat server
+        ec2:
+            key_name: vp_stack_key
+            region: "{{region}}"
+            instance_type: t2.micro
+            image: "{{tomcat_ami}}"
+            wait: yes
+            wait_timeout: 300
+            instance_tags:
+                Name: Tomcat
+            exact_count: 1
+            count_tag:
+                Name: Tomcat
+            group_id: "{{vpor_stack_sg_out.group_id}}"
+            vpc_subnet_id: "{{privsub1id}}"
+        register: tomcat_out
+
+
+      - name: createing memcahd server
+        ec2:
+            key_name: vp_stack_key
+            region: "{{region}}"
+            instance_type: t2.micro
+            image: "{{memcahd_ami}}"
+            wait: yes
+            wait_timeout: 300
+            instance_tags:
+                Name: Memcahd
+            exact_count: 1
+            count_tag:
+                Name: Memcahd
+            group_id: "{{vpor_stack_sg_out.group_id}}"
+            vpc_subnet_id: "{{privsub1id}}"
+        register: Memcahd_out
+
+      - name: createing rmq server
+        ec2:
+            key_name: vp_stack_key
+            region: "{{region}}"
+            instance_type: t2.micro
+            image: "{{rmq_ami}}"
+            wait: yes
+            wait_timeout: 300
+            instance_tags:
+                Name: rmq
+            exact_count: 1
+            count_tag:
+                Name: rmq
+            group_id: "{{vpor_stack_sg_out.group_id}}"
+            vpc_subnet_id: "{{privsub1id}}"
+        register: rmq_out
+
              
 
 
