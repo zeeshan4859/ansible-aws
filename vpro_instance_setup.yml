@@ -140,6 +140,9 @@
             vpc_subnet_id: "{{privsub1id}}"
         register: rmq_out
 
+      - deug:
+            var: rmq_out    
+
              
 
 
