@@ -123,6 +123,23 @@
             vpc_subnet_id: "{{privsub1id}}"
         register: Memcahd_out
 
+      - name: createing bd server
+        ec2:
+            key_name: vp_stack_key
+            region: "{{region}}"
+            instance_type: t2.micro
+            image: "{{mysql_ami}}"
+            wait: yes
+            wait_timeout: 300
+            instance_tags:
+                Name: db01
+            exact_count: 1
+            count_tag:
+                Name: db01
+            group_id: "{{vpor_stack_sg_out.group_id}}"
+            vpc_subnet_id: "{{privsub1id}}"
+        register: db01_out
+
       - name: createing rmq server
         ec2:
             key_name: vp_stack_key
@@ -145,15 +162,70 @@
 
       - name: copy the instance ids in the file
         copy: 
-            content: " web01: {{web01_out.tagged_instances[0].id}}\ntomcat: {{tomcat_out.tagged_instances[0].id}}\nMemcahd: {{Memcahd_out.tagged_instances[0].id}}\nrmq: {{rmq_out.tagged_instances[0].id}}\n "
-            dest: variable/instance_ids
+            content: "web01: {{web01_out.tagged_instances[0].id}}\ntomcat: {{tomcat_out.tagged_instances[0].id}}\nMemcahd: {{Memcahd_out.tagged_instances[0].id}}\nrmq: {{rmq_out.tagged_instances[0].id}}\ndb01: \nrmq: {{db01_out.tagged_instances[0].id}} "
+            dest: provision_stack/variables/instance_ids
 
       - name: copy the instance ips in the file
         copy: 
-            content: " web01: {{web01_out.tagged_instances[0].private_ip}}\ntomcat: {{tomcat_out.tagged_instances[0].private_ip}}\nMemcahd: {{Memcahd_out.tagged_instances[0].private_ip}}\nrmq: {{rmq_out.tagged_instances[0].private_ip}}\n "
-            dest: variable/instance_ips
+            content: "web01: {{web01_out.tagged_instances[0].private_ip}}\ntomcat: {{tomcat_out.tagged_instances[0].private_ip}}\nMemcahd: {{Memcahd_out.tagged_instances[0].private_ip}}\nrmq: {{rmq_out.tagged_instances[0].private_ip}}\ndb01: {{db01_out.tagged_instances[0].private_ip}}"
+            dest: provision_stack/variables/instance_ips
 
-             
+      - local_action:
+            module: ec2_elb_lb
+            name: "vpro_ELB"
+            region: "{{region}}"
+            state: present
+            instance_ids:
+                - "{{web01_out.tagged_instances[0].id}}" 
+            purge_instance_ids: true
+            security_group_id: "{{vporELB_Sg_out.group_id}}"
+            subnets:
+                - "{{pubsub1id}}"
+                - "{{pubsub2id}}"
+                - "{{pubsub3id}}"
+            listeners:
+                - protocol: http
+                  load_balancer_port: 80
+                  instance_port: 80
+
+      - name: inster and update the inventry file
+        blockinfile:
+            path: provision_stack/inventry_vpro
+            block: |
+              web01 ansible_host={{web01_out.tagged_instances[0].private_ip}}
+              app01 ansible_host={{tomcat_out.tagged_instances[0].private_ip}}
+              rmq01 ansible_host={{Memcahd_out.tagged_instances[0].private_ip}}
+              mc01 ansible_host={{rmq_out.tagged_instances[0].private_ip}}
+              db01 ansible_host={{db01_out.tagged_instances[0].private_ip}}
+              cntrl ansible_host=127.0.0.1 ansible_connection=local
 
 
+              [websrvgrp]
+              web01
+
+              [appsrvgrp]
+              app01
+
+              [rmqsrvgrp]
+              rmq01
+
+              [mcsrvgrp]
+              mc01
+
+              [dbsrvgrp]
+              db01
+
+              [control]
+              cntrl
+
+              [stack_inst:children]
+              websrvgrp
+              appsrvgrp
+              rmqsrvgrp
+              mcsrvgrp
+              dbsrvgrp
+
+              [stack_inst:vars]
+              ansible_user=ubuntu
+              ansible_ssh_private_key_file=vp_stack_key.pem
 
