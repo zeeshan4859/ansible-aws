@@ -162,7 +162,7 @@
 
       - name: copy the instance ids in the file
         copy: 
-            content: "web01: {{web01_out.tagged_instances[0].id}}\ntomcat: {{tomcat_out.tagged_instances[0].id}}\nMemcahd: {{Memcahd_out.tagged_instances[0].id}}\nrmq: {{rmq_out.tagged_instances[0].id}}\ndb01: \nrmq: {{db01_out.tagged_instances[0].id}} "
+            content: "web01: {{web01_out.tagged_instances[0].id}}\ntomcat: {{tomcat_out.tagged_instances[0].id}}\nMemcahd: {{Memcahd_out.tagged_instances[0].id}}\nrmq: {{rmq_out.tagged_instances[0].id}}\ndb01: {{db01_out.tagged_instances[0].id}} "
             dest: provision_stack/variables/instance_ids
 
       - name: copy the instance ips in the file
