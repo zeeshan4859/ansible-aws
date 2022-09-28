@@ -172,7 +172,7 @@
 
       - local_action:
             module: ec2_elb_lb
-            name: "vpro_ELB"
+            name: "vpro-ELB"
             region: "{{region}}"
             state: present
             instance_ids:
