@@ -2,5 +2,4 @@ web01: i-0294314fd5d7437e6
 tomcat: i-023207f716af92f9b
 Memcahd: i-0dddd17cb448d298f
 rmq: i-0188697bb1037fbab
-db01: 
-rmq: i-01e1a5ad18db612d7 
+db01: i-01e1a5ad18db612d7 
