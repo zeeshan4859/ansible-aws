@@ -178,7 +178,7 @@
             instance_ids:
                 - "{{web01_out.tagged_instances[0].id}}" 
             purge_instance_ids: true
-            security_group_id: "{{vporELB_Sg_out.group_id}}"
+            security_group_ids: "{{vporELB_Sg_out.group_id}}"
             subnets:
                 - "{{pubsub1id}}"
                 - "{{pubsub2id}}"
