@@ -34,6 +34,6 @@ mcsrvgrp
 dbsrvgrp
 
 [stack_inst:vars]
-ansible_user=ubuntu
+ansible_user=root
 ansible_ssh_private_key_file=vp_stack_key.pem
 # END ANSIBLE MANAGED BLOCK
